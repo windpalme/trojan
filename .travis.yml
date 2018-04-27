@@ -17,3 +17,6 @@ script:
   - make
   - ctest
   - sudo make install
+
+addons:
+  artifacts: true
