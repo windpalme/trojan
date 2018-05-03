@@ -15,25 +15,8 @@ target_link_libraries(trojan ${Boost_LIBRARIES})
 find_package(OpenSSL 1.0.2 REQUIRED)
 include_directories(${OPENSSL_INCLUDE_DIR})
 target_link_libraries(trojan ${OPENSSL_LIBRARIES})
-set(WIN32 TRUE)
-if(WIN32)
+
     target_link_libraries(trojan wsock32 ws2_32)
     if (STATIC)
         target_link_libraries(trojan -static)
     endif()
-else()
-    install(TARGETS trojan DESTINATION bin)
-    configure_file(examples/server.json-example trojan.json COPYONLY)
-    install(FILES ${CMAKE_BINARY_DIR}/trojan.json DESTINATION /etc)
-    if(EXISTS /usr/lib/systemd/system)
-        configure_file(examples/trojan.service-example trojan.service)
-        install(FILES ${CMAKE_BINARY_DIR}/trojan.service DESTINATION /usr/lib/systemd/system)
-    endif()
-    enable_testing()
-    add_test(NAME LinuxSmokeTest-basic
-             COMMAND sh ${CMAKE_SOURCE_DIR}/tests/LinuxSmokeTest/basic.sh ${CMAKE_BINARY_DIR}/trojan
-             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests/LinuxSmokeTest)
-    add_test(NAME LinuxSmokeTest-fake-client
-             COMMAND sh ${CMAKE_SOURCE_DIR}/tests/LinuxSmokeTest/fake-client.sh ${CMAKE_BINARY_DIR}/trojan
-             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests/LinuxSmokeTest)
-endif()
