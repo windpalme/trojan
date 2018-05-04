@@ -8,6 +8,7 @@ install:
   - echo "using gcc : : i686-w64-mingw32-g++ ;" > user-config.jam
   - ./bootstrap.sh
   - ./b2 --user-config=user-config.jam toolset=gcc-mingw target-os=windows release
+  - cd ..
   - curl https://www.openssl.org/source/openssl-1.0.2n.tar.gz | tar xz
   - cd openssl-1.0.2n/
   - ./config shared
