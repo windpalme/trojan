@@ -5,10 +5,10 @@ install:
   - sudo apt-get install -y cmake3 libboost-system-dev realpath mingw-w64 gcc-mingw-w64 g++-mingw-w64
   - curl https://cfhcable.dl.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.gz | tar xz
   - cd boost_1_54_0/
-  - echo "using gcc : : i686-w64-mingw32-g++ ;" > user-config.jam
+  - "echo using gcc : : i686-w64-mingw32-g++ ; > user-config.jam"
   - ./bootstrap.sh
   - ./b2 --user-config=user-config.jam toolset=gcc-mingw target-os=windows release
-  - cd ..
+  - cd ../
   - curl https://www.openssl.org/source/openssl-1.0.2n.tar.gz | tar xz
   - cd openssl-1.0.2n/
   - ./config shared
